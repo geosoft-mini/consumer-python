@@ -12,7 +12,6 @@ SQLALCHEMY_DATABASE_URL = f'postgresql://{username}:{password}@{host}:{port}/{db
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
-    # connect_args={"check_same_thread": False},
     pool_size=10, 
     max_overflow=20
 )

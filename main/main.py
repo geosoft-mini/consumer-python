@@ -1,29 +1,22 @@
 
 from db.database import SessionLocal
-from models.model import Korea_1st, Korea_2nd, Korea_3rd, Korea_4th
+from db.model import Korea_1st, Korea_2nd, Korea_3rd, Korea_4th
 from sqlalchemy import select, func, and_
 from sqlalchemy.orm import aliased
 from sqlalchemy.sql import literal_column
-from schemas.matrix import Matrix
-from fastapi import APIRouter
 
 from kafka import KafkaConsumer
 from json import loads
-
-
 
 consumer = KafkaConsumer(
     client_id = 'consumer1',
     bootstrap_servers=['localhost:9092'], # 카프카 브로커 주소 리스트
     auto_offset_reset='earliest', # 오프셋 위치(earliest:가장 처음, latest: 가장 최근)
-    enable_auto_commit=True, # 오프셋 자동 커밋 여부
-    group_id='test-group1', # 컨슈머 그룹 식별자
+    # enable_auto_commit=True, # 오프셋 자동 커밋 여부
+    group_id = 'test-group1', # 컨슈머 그룹 식별자
     value_deserializer=lambda x: loads(x.decode('utf-8')), # 메시지의 값 역직렬화
-    # consumer_timeout_ms=1000 # 데이터를 기다리는 최대 시간
 )
-consumer.subscribe('topic1')
-
-router = APIRouter(prefix='/api')
+consumer.subscribe('topic2')
 db = SessionLocal()
 
 subquery_b = (
@@ -95,24 +88,13 @@ def __si_gu_dong_li(x, y):
         .join(subquery_d, subquery_c.c.up_cd == subquery_d.c.ctprvn_cd)
     )
 
-for message in consumer:
-    print(message.value)
-    x = message.value[0]
-    y = message.value[1]
+for messages in consumer:
+    for index, message in enumerate(messages.value):
+        x = float(message[0])
+        y = float(message[1])
 
-    results = db.execute(__si_gu_dong_li(x, y)).fetchone()
-    if not results:
-        results = db.execute(__si_gu_dong(x, y)).fetchone()
+        results = db.execute(__si_gu_dong_li(x, y)).fetchone()
+        if not results:
+            results = db.execute(__si_gu_dong(x, y)).fetchone()
 
-    print(results)
-
-
-
-# @router.post('/geometrix')
-# def geo_metrix(matrix: Matrix) -> tuple:
-#     x = matrix.x
-#     y = matrix.y
-
-    
-
-#     return results
+        print(index, results)
