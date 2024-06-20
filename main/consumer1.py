@@ -9,13 +9,16 @@ consumer.subscribe(topic)
 db = SessionLocal()
 
 for messages in consumer:
-    for value in messages.value:
-        x = float(value[0])
-        y = float(value[1])
+    for i in messages:
+        print(i.partition)
+    
+    
+    # for value in messages.value:
+    #     x = float(value[0])
+    #     y = float(value[1])
         
-        result = db.execute(si_gu_dong_ri(x, y)).fetchone()
-        if not result:
-            result = db.execute(si_gu_dong(x, y)).fetchone()
+    #     result = db.execute(si_gu_dong_ri(x, y)).fetchone()
+    #     if not result:
+    #         result = db.execute(si_gu_dong(x, y)).fetchone()
         
-        print(result)
-
+    #     print(result)

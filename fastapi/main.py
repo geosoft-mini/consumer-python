@@ -46,14 +46,10 @@ def file_upload(file: UploadFile) -> list:
     read_x = read_csv.iloc[:,4]
     read_y = read_csv.iloc[:,5]
 
-    result = []
+    result = [db.execute(si_gu_dong_ri(x, y)).fetchone() for x, y in zip(read_x, read_y)]
 
-    for x, y in zip(read_x, read_y):
-        execute_query = db.execute(si_gu_dong_ri(x, y)).fetchone()
-        result.append(execute_query)
-        if not result:
-            execute_query = db.execute(si_gu_dong(x, y)).fetchone()
-            result.append(execute_query)
+    if not result:
+        result = [db.execute(si_gu_dong(x, y)).fetchone() for x, y in zip(read_x, read_y)]
 
     return result
 
