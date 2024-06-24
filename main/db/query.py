@@ -8,7 +8,7 @@ si = (select(Korea_1st.ctprvn_cd, Korea_1st.ctp_kor_nm)).alias('si')
 def si_gu_dong(x, y):
     dong = (
         select(Korea_3rd.emd_cd, func.substring(Korea_3rd.emd_cd, 1, 5).label('up_cd'), Korea_3rd.emd_kor_nm)
-        .where(func.ST_Within(func.ST_SetSRID(func.ST_GeomFromText(f'POINT({x} {y})'), 4326), Korea_3rd.geom))
+        .where(func.geometry_within(func.ST_SetSRID(func.ST_GeomFromText(f'POINT({x} {y})'), 4326), Korea_3rd.geom))
         .limit(1)
     ).alias('dong')
     
@@ -25,7 +25,7 @@ def si_gu_dong(x, y):
 def si_gu_dong_ri(x, y):
     ri = (
          select(Korea_4th.li_cd, func.substring(Korea_4th.li_cd, 1, 8).label('up_cd'), Korea_4th.li_kor_nm)
-        .where(func.ST_Within(func.ST_SetSRID(func.ST_GeomFromText(f'POINT({x} {y})'), 4326), Korea_4th.geom))
+        .where(func.geometry_within(func.ST_SetSRID(func.ST_GeomFromText(f'POINT({x} {y})'), 4326), Korea_4th.geom))
         .limit(1)
     ).alias('ri')
 
@@ -36,5 +36,6 @@ def si_gu_dong_ri(x, y):
         .join(gu, dong.c.up_cd == gu.c.sig_cd)
         .join(si, gu.c.up_cd == si.c.ctprvn_cd)
     )
+    
 
     return result

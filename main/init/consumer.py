@@ -10,5 +10,7 @@ def init(client_id, group_id):
         enable_auto_commit = True, # 오프셋 자동 커밋 여부
         group_id = group_id, # 컨슈머 그룹 식별자
         value_deserializer = lambda x: loads(x.decode('utf-8')), # 메시지의 값 역직렬화
+        # max_poll_interval_ms=1800000,
+        # session_timeout_ms=1800000,
         consumer_timeout_ms = 10000,
     )
