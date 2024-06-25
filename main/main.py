@@ -4,8 +4,9 @@ from init.consumer import init
 from create.create_excel import CreateExcel
 
 excel_title = '과속 상세내역'
-excel_sheet_name = '상세주소변환'
-excel = CreateExcel(excel_title)
+excel_sheet_name = '과속 상세내역 주소변환'
+result_file_name_path = './excel/result.xlsx'
+excel = CreateExcel(excel_title, excel_sheet_name)
 
 topic = 'overspeed-detail-address'
 consumer = init(client_id='consumer1', group_id='test-group1')
@@ -17,7 +18,6 @@ db = SessionLocal()
 
 def __create_row(values: list, address: str) -> list:
     return [values[0], values[1], values[2], values[3], address, values[6], values[7]]
-
 
 for messages in consumer:
     for values in messages.value:
@@ -33,7 +33,7 @@ for messages in consumer:
         row = __create_row(values, address)
         excel.ws.append(row)
         
-excel.wb.save("./excel/result.xlsx")
+excel.wb.save(result_file_name_path)
 excel.wb.close()
  
 
