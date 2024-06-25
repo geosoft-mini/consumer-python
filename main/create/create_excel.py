@@ -3,8 +3,6 @@ from openpyxl import Workbook, load_workbook
 class CreateExcel():
     def __init__(self, title: str, sheet_name: str) -> None:
         self.wb = load_workbook('./excel/apk.xlsx')
-        self.wb.create_sheet(sheet_name)
-        
         self.ws = self.wb[sheet_name]
         self.ws.title = title
         self.__append_column()
