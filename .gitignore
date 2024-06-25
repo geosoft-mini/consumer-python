@@ -1,6 +1,7 @@
 /postgres-data
 /__pycache__
 *.csv
+*.xlsx
 
 # Created by https://www.toptal.com/developers/gitignore/api/venv,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=venv,python

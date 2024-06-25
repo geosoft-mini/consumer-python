@@ -4,9 +4,10 @@ from init.consumer import init
 from create.create_excel import CreateExcel
 
 excel_title = '과속 상세내역'
+excel_sheet_name = '상세주소변환'
 excel = CreateExcel(excel_title)
 
-topic = 'large-message'
+topic = 'overspeed-detail-address'
 consumer = init(client_id='consumer1', group_id='test-group1')
 consumer.subscribe(topic)
 # 하나의 consumer가 특정 하나의 파티션만을 처리하기 위해서 사용
@@ -16,6 +17,7 @@ db = SessionLocal()
 
 def __create_row(values: list, address: str) -> list:
     return [values[0], values[1], values[2], values[3], address, values[6], values[7]]
+
 
 for messages in consumer:
     for values in messages.value:
@@ -31,7 +33,7 @@ for messages in consumer:
         row = __create_row(values, address)
         excel.ws.append(row)
         
-excel.wb.save("./result.xlsx")
+excel.wb.save("./excel/result.xlsx")
 excel.wb.close()
  
 
