@@ -3,6 +3,8 @@ from db.query import si_gu_dong_ri, si_gu_dong
 from init.consumer import init
 from create.create_excel import CreateExcel
 
+
+
 excel_title = '과속 상세내역'
 excel_sheet_name = '과속 상세내역 주소변환'
 result_file_name_path = './excel/result.xlsx'
