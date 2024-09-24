@@ -29,6 +29,7 @@ def __create_row(values: list, address: str) -> list:
 try:
     for messages in consumer:
         for values in messages.value:
+            
             x = float(values[4])
             y = float(values[5])
         
