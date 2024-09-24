@@ -19,6 +19,16 @@ $ kafka-topics --list --bootstrap-server localhost:9092
 $ kafka-consumer-groups --bootstrap-server localhost:9092 --describe --group test-group1
 ```
 
+### kafka 에러
+error shutdown broker because all log dirs in /tmp/kafka-logs have failed (kafka.log.logmanager) log
+
+volume이 망가졌을 가능성있음
+
+https://shinwusub.tistory.com/130
+
+
+
+
 
 
 
