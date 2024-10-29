@@ -17,3 +17,8 @@ class CreateExcel():
 
     def create_excel(self, items: tuple) -> str:
         return ' '.join(items)
+    
+    def save_file_name(self) -> str:
+        self.file_name.replace('xlsx', 'result')
+        self.file_name += '.xlsx'
+        return self.file_name 

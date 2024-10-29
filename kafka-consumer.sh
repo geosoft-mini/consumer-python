@@ -5,3 +5,7 @@ kafka-consumer-groups --bootstrap-server localhost:9092 --describe --group test-
 
 sleep 10
 done
+
+kafka-consumer-groups --bootstrap-server localhost:9092 --group test-group1 --topic overspeed-detail-address --reset-offsets --to-earliest --execute
+
+kafka-consumer-groups --bootstrap-server localhost:9092 --group test-group1 --topic overspeed-detail-addres --reset-offsets --to-earliest --dry-run
