@@ -37,6 +37,7 @@ try:
             address = excel.create_excel(result)
             row = create_row(values, address)
             excel.ws.append(row)
+        consumer.commit()
 
     excel.wb.save(result_file_name_path)
     excel.wb.close()               
